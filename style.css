@@ -68,18 +68,44 @@ body {
 
 /* messages */
 .msg {
+  width: fit-content;
+  max-width: 80%;
   margin-bottom: 14px;
+  padding: 10px 14px;
   line-height: 1.5;
+  overflow-wrap: anywhere;
+  animation: message-enter 250ms ease-out both;
 }
 
 .msg.user {
+  margin-left: auto;
   background: #111111;
+  border-radius: 18px 18px 4px 18px;
   color: #ffffff;
 }
 
 .msg.ai {
+  margin-right: auto;
   background: #f6e8e5;
+  border-radius: 18px 18px 18px 4px;
   color: #111111;
+}
+
+@keyframes message-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg {
+    animation: none;
+  }
 }
 
 /* input row */

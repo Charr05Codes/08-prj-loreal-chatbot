@@ -14,6 +14,11 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
+    // Serve the chatbot website from the same Worker deployment.
+    if (request.method === 'GET') {
+      return env.ASSETS.fetch(request);
+    }
+
     const apiKey = env.OPENAI_API_KEY;
     const apiUrl = 'https://api.openai.com/v1/chat/completions';
 

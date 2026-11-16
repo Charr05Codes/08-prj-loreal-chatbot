@@ -2,12 +2,23 @@
 
 export default {
   async fetch(request, env) {
+    const allowedOrigins = [
+      'https://08-prj-loreal-chatbot-2.colin-harrison05.workers.dev',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000'
+    ];
+    const requestOrigin = request.headers.get('Origin');
     const corsHeaders = {
-      'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400',
       'Content-Type': 'application/json'
     };
+
+    if (allowedOrigins.includes(requestOrigin)) {
+      corsHeaders['Access-Control-Allow-Origin'] = requestOrigin;
+      corsHeaders['Vary'] = 'Origin';
+    }
 
     // Handle CORS preflight requests
     if (request.method === 'OPTIONS') {

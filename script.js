@@ -3,8 +3,9 @@ const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
-const workerUrl = "https://loreal-chatbot.your-subdomain.workers.dev/";
-const systemMessage = `You are a helpful L’Oréal beauty assistant. Only answer questions related to L’Oréal products, makeup, skincare, haircare, fragrances, beauty routines, and personalized product recommendations. Provide clear, friendly, and useful responses. If a user asks about something unrelated to L’Oréal or beauty routines, politely explain that you can only assist with L’Oréal-related beauty questions. Do not invent specific product details or claims when information is unavailable.`;
+// Replace this placeholder with your deployed Cloudflare Worker URL.
+const workerUrl = "https://08-prj-loreal-chatbot-2.colin-harrison05.workers.dev";
+const systemMessage = `You are a helpful L’Oréal beauty assistant. Only answer questions about L’Oréal products, makeup, skincare, haircare, fragrances, beauty routines, or personalized product recommendations. Politely redirect unrelated questions to L’Oréal beauty topics. Do not invent product details or claims when information is unavailable.`;
 const conversation = [];
 
 // Set initial message

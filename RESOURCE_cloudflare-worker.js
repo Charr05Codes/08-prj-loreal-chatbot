@@ -2,11 +2,6 @@
 
 export default {
   async fetch(request, env) {
-    const allowedOrigins = [
-      'https://08-prj-loreal-chatbot-2.colin-harrison05.workers.dev',
-      'http://localhost:3000',
-      'http://127.0.0.1:3000'
-    ];
     const requestOrigin = request.headers.get('Origin');
     const corsHeaders = {
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -15,7 +10,32 @@ export default {
       'Content-Type': 'application/json'
     };
 
-    if (allowedOrigins.includes(requestOrigin)) {
+    // Allow the deployed Worker, local previews, Codespaces, and GitHub Pages.
+    // Reading the URL lets local previews use different ports.
+    let isAllowedOrigin = false;
+
+    if (requestOrigin) {
+      try {
+        const originUrl = new URL(requestOrigin);
+        const hostname = originUrl.hostname;
+        const isLocalhost =
+          (hostname === 'localhost' || hostname === '127.0.0.1') &&
+          (originUrl.protocol === 'http:' || originUrl.protocol === 'https:');
+        const isCodespaces =
+          hostname.endsWith('.app.github.dev') ||
+          hostname.endsWith('.githubpreview.dev');
+
+        isAllowedOrigin =
+          requestOrigin === 'https://08-prj-loreal-chatbot-2.colin-harrison05.workers.dev' ||
+          requestOrigin === 'https://charr05codes.github.io' ||
+          isLocalhost ||
+          isCodespaces;
+      } catch (error) {
+        isAllowedOrigin = false;
+      }
+    }
+
+    if (isAllowedOrigin) {
       corsHeaders['Access-Control-Allow-Origin'] = requestOrigin;
       corsHeaders['Vary'] = 'Origin';
     }
